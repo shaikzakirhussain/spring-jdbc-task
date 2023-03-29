@@ -1,0 +1,316 @@
+
+
+<%-- 
+<!-- DEFFERNIATING THE EMPOYEE IN A DROPDOWN-->
+<div class="row my-5">
+	<div class="col-2">
+		<div class="dropdown">
+			<button class="btn btn-primary dropdown-toggle" type="button"
+				data-bs-toggle="dropdown" aria-expanded="false"
+				style="font-family: 'Times New Roman', serif;">Emp with no
+				designation</button>
+			<form:form method="post" id="form">
+				<select id="selection" class="dropdown-menu">
+					<c:forEach var="emo" items="${unlist_dropdown}">
+						<option value="${emo.id}">${emo.name}</option>
+					</c:forEach>
+				</select>
+				<button type="submit" onclick="btn()" id="noDesigBtn">Edit</button>
+			</form:form>
+		</div>
+	</div>
+</div>
+
+<!-- EDIT BUTTON FOR THE OPTION SELECTED -->
+<script>
+function btn(){
+	
+	let url = "http://localhost:8080/SpringMVCPagination/editemp/";
+
+	document.getElementById('form').addEventListener('submit', (e) => {
+	    e.preventDefault();
+	  let selection = document.getElementById('selection').value;
+	  console.log(url + selection);
+	  window.location.href = url + selection;
+	});
+}
+</script>
+ --%>
+ 
+ 
+ 
+ 
+ =========================================================================================================================
+ 
+
+ 
+ 
+ 
+ 
+<!-- Dropdown to search the  company  -->
+
+
+<%-- <div id="companyDropdown">
+	<form:form method="post" id="dropdownform">
+		<select id="sel">
+			<c:forEach var="alc" items="${allcompany}" >
+				<option value="${alc.url}" itemValue="id" itemLabel="name">${alc.name}</option>
+			</c:forEach>
+		</select>
+		<button type="submit" onclick="dropdownbtn()" id="dropdownSearch">search</button>
+	</form:form>
+
+</div>
+
+
+<script>
+
+function dropdownbtn(){
+	
+	let ur = "http://localhost:8080/SpringMVCPagination/";
+
+	document.getElementById('dropdownform').addEventListener('submit', (e) => {
+	    e.preventDefault();
+	  let sel = document.getElementById('sel').value;
+	  console.log(ur + sel);
+	  window.location.href = ur + sel;
+	});
+}
+</script>
+ --%>
+ 
+ 
+ 
+ 
+  =========================================================================================================================
+ 
+ 
+ 
+ 
+<script>
+function openEditModal(id) {
+	  // Make an AJAX call to retrieve the data from the server
+	  const xhr = new XMLHttpRequest();
+	  xhr.open("GET", "/editemp?id=" + id);
+	  xhr.onload = function() {
+	    if (xhr.status === 200) {
+	      const data = JSON.parse(xhr.responseText);
+
+	      // Populate the fields in the modal
+	      document.getElementById("name").value = data.name;
+/* 	      document.getElementById("designation").value = data.designation; */
+	      document.getElementById("salary").value = data.salary;
+
+	      // Set the ID
+	      document.getElementById("id").value = id;
+
+	      // Show the modal
+	      const modal = document.getElementById("editModal");
+	      modal.style.display = "block";
+	    } else {
+	      console.log("Request failed. Status: " + xhr.status);
+	    }
+	  };
+	  xhr.send();
+	}
+
+</script>
+ 
+ ============================================================================================================
+ 
+ 
+<!-- Delete Modal -->
+<%-- <div class="modal fade" id="deletemodal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="post" action="${pageContext.request.contextPath}/deleteemp/">
+			<div class="modal-header">
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete
+				<p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary"
+					data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger">Delete</button>
+				<input type="hidden" name="id" id="id">
+			</div>
+			</form>
+		</div>
+	</div>
+	
+	
+	<script type="text/javascript">
+		$(document).ready function(){
+			
+			$('table .delete').on('click', function){
+				var id =$(this).parent().find('#id').val();
+				$('deletemodal #id').val(id);
+			}
+		}
+	
+	</script> --%>
+	
+	
+	
+	
+	========================================================================================================
+	
+	
+	
+	
+	<td class="empId">${emp.id}</td>
+				<td class="empName">${emp.name}</td>
+				<td class="empSalary">${emp.salary}</td>
+				<td class="empDesig">${emp.designation}</td>
+				
+				
+				
+				
+==========================================================================================
+
+
+
+
+<td><a href="#" onclick="editEmployee(${emp})" class="edit-person" >
+
+
+
+
+
+=========================================================================================
+
+
+
+
+<script>
+$(function (){
+	$(".editiconc").click(function (){
+		var a = $(this).parents("tr").find(".emplName").text();
+		console.log(a);
+	})
+})
+</script>
+
+
+=========================================================================================
+
+
+<!-- LOGIN MODAL  -->
+
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width: 800px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Login Form</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+    <div class="row">
+
+          <form class="card-body" id="loginForm" method="post" action="savelogin" name="loginForm">
+
+            <div class="text-center">
+              <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                width="auto" alt="profile">
+            </div>
+
+            <div class="mb-3">
+              <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp"
+                placeholder="User Name">
+            </div>
+            <div class="mb-3">
+              <input type="password" class="form-control" id="password" placeholder="password" name="password">
+            </div>
+            <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button></div>
+          </form>
+
+    </div>
+  </div>
+
+      </div>    </div>
+  </div>
+</div>
+ -->  
+ 
+ 
+ =============================  VERSION II ============================================================
+ 
+ 
+ 
+ 
+	<!-- LOGIN MODAL  -->
+
+	<button id="loginButton">Login</button>
+
+	<div id="loginModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<form>
+				<label for="username">Username:</label> <input type="text"
+					id="username" name="username"> <label for="password">Password:</label>
+				<input type="password" id="password" name="password">
+				<button type="submit">Login</button>
+			</form>
+		</div>
+	</div>
+
+<script>
+//Get the modal
+var modal = document.getElementById("loginModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("loginButton");
+
+// Get the element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+modal.style.display = "block";
+}
+
+// When the user clicks on (x), close the modal
+span.onclick = function() {
+modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}
+
+// When the user submits the login form, do something
+ document.querySelector('form').addEventListener('submit', function (e) {
+ e.preventDefault();
+ var username = document.querySelector('#loginModal form #username').value;
+ var password = document.querySelector('#loginModal form #password').value;
+ console.log(username);
+
+
+
+ 
+ if (username === 'delta' && password === '1234') 
+ {
+		window.location.href = "http://localhost:8080/SpringMVCPagination/viewemp";
+	} else if (username === 'tcs' && password === '0101') {
+		window.location.href = "http://localhost:8080/SpringMVCPagination/tcsEmp";	}
+	  else if (username === 'deliote' && password === '007') {
+		  window.location.href = "http://localhost:8080/SpringMVCPagination/delioteEmp";		}
+	 else {
+      alert("WRONG CREDENTIALS")	
+      
+	}
+
+});
+
+ 
